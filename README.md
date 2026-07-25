@@ -1,79 +1,76 @@
-## Ex--5-Rail-Fence-Program
+# Ex-4 Rail-Fence-Program
 
-## IMPLEMENTATION OF RAIL FENCE – ROW & COLUMN TRANSFORMATION TECHNIQUE
+# IMPLEMENTATION OF RAIL FENCE – ROW & COLUMN TRANSFORMATION TECHNIQUE
+## NAME : ASHIKA
+## Reg.NO: 212224220011
+## Date : 25/7/26
 
-## AIM:
+# AIM:
 
-To write a C program to implement the rail fence transposition technique.
+# To write a C program to implement the rail fence transposition technique.
 
-## DESCRIPTION:
+# DESCRIPTION:
 
 In the rail fence cipher, the plain text is written downwards and diagonally on successive "rails" of an imaginary fence, then moving up when we reach the bottom rail. When we reach the top rail, the message is written downwards again until the whole plaintext is written out. The message is then read off in rows.
 
-## ALGORITHM:
+# ALGORITHM:
 
 STEP-1: Read the Plain text.
-
 STEP-2: Arrange the plain text in row columnar matrix format.
-
 STEP-3: Now read the keyword depending on the number of columns of the plain text.
-
 STEP-4: Arrange the characters of the keyword in sorted order and the corresponding columns of the plain text.
-
 STEP-5: Read the characters row wise or column wise in the former order to get the cipher text.
 
-## PROGRAM:
+# PROGRAM
 
 ```
 #include <stdio.h>
 #include <string.h>
-int main() {
-    int i, j, len, rails, count, dir;
+
+int main()
+{
+    int i, j, len, rails, count = 0;
     char str[1000];
-    int code[100][1000] = {0};  // Initialize the entire array to 0
+    int code[100][1000] = {0};
+
     printf("Enter a Secret Message:\n");
-    scanf("%s",str);
+    fgets(str, sizeof(str), stdin);
+    str[strcspn(str, "\n")] = '\0';
+
     len = strlen(str);
+
     printf("Enter number of rails:\n");
     scanf("%d", &rails);
-    count = 0;
-    i = 0;
-    dir = 1;  
-    for (j = 0; j < len; j++) {
-        code[i][j] = str[j];
-        // Change direction if we reach the top or bottom rail
-        if (i == 0) {
-            dir = 1;
-        } else if (i == rails - 1) {
-            dir = -1;
+
+    j = 0;
+    while (j < len)
+    {
+        if (count % 2 == 0)
+        {
+            for (i = 0; i < rails && j < len; i++)
+                code[i][j++] = str[j - 1];
         }
-        i += dir;
+        else
+        {
+            for (i = rails - 2; i > 0 && j < len; i--)
+                code[i][j++] = str[j - 1];
+        }
+        count++;
     }
+
     printf("Encrypted Message:\n");
-    // Print the encrypted message
-    for (i = 0; i < rails; i++) {
-        for (j = 0; j < len; j++) {
-            if (code[i][j] != 0) {
+    for (i = 0; i < rails; i++)
+        for (j = 0; j < len; j++)
+            if (code[i][j] != 0)
                 printf("%c", code[i][j]);
-            }
-        }
-    }
-    printf("\n");
+
     return 0;
 }
 ```
 
-## OUTPUT:
+# OUTPUT
 
-![Screenshot 2025-05-15 211218](https://github.com/user-attachments/assets/4e37cfea-a322-4f6e-b57c-d3fe6c3e703b)
+<img width="1918" height="825" alt="image" src="https://github.com/user-attachments/assets/1f68e7e6-ce45-4308-8371-a44ec2148f08" />
 
-
-Enter a Secret Message: amrutha
-
-Enter number of rails: 3
-
-Encrypted Message: atmuhra
-
-## RESULT:
-
-The program is executed successfully.
+# RESULT
+Thus the program has been executed successfully.
